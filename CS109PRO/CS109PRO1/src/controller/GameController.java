@@ -76,13 +76,13 @@ public class GameController implements GameListener {
         boolean NoBlue = true;
         ChessboardPoint redCave = new ChessboardPoint(0,3);
         ChessboardPoint blueCave = new ChessboardPoint(8, 3);
-        if(model.getGrid()[redCave.getRow()][redCave.getCol()].getPiece() != null){
+        if(model.getGrid()[redCave.row()][redCave.col()].getPiece() != null){
             if(model.getChessPieceOwner(redCave) == PlayerColor.BLUE){
             System.out.print("Blue wins!");
             win = true;
         }
         }
-        if(model.getGrid()[blueCave.getRow()][blueCave.getCol()].getPiece() != null){
+        if(model.getGrid()[blueCave.row()][blueCave.col()].getPiece() != null){
             if(model.getChessPieceOwner(blueCave) == PlayerColor.RED){
             System.out.print("Red wins!");
             win = true;
@@ -128,7 +128,7 @@ public class GameController implements GameListener {
               if(model.getChessPieceOwner(point) == PlayerColor.BLUE){
                   System.out.print(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
                           " has entered the trap!");
-                  model.getGrid()[point.getRow()][point.getCol()].getPiece().setTrapped(true);
+                  model.getGrid()[point.row()][point.col()].getPiece().setTrapped(true);
               }
             }
             if(point.toString().equals("(8,2)") | point.toString().equals("(8,4)") |
@@ -136,7 +136,7 @@ public class GameController implements GameListener {
                 if(model.getChessPieceOwner(point) == PlayerColor.RED){
                     System.out.print(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
                             " has entered the trap!");
-                    model.getGrid()[point.getRow()][point.getCol()].getPiece().setTrapped(true);
+                    model.getGrid()[point.row()][point.col()].getPiece().setTrapped(true);
                 }
             }
             if(win()){

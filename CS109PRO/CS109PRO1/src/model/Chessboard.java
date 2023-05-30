@@ -1,6 +1,5 @@
 package model;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import controller.GameController;
 /**
@@ -9,7 +8,7 @@ import controller.GameController;
  */
 public class Chessboard {
 
-    private Cell[][] grid;
+    private final Cell[][] grid;
 
     public Chessboard() {
         this.grid =
@@ -56,11 +55,11 @@ public class Chessboard {
     }
 
     private Cell getGridAt(ChessboardPoint point) {
-        return grid[point.getRow()][point.getCol()];
+        return grid[point.row()][point.col()];
     }
 
     private int calculateDistance(ChessboardPoint src, ChessboardPoint dest) {
-        return Math.abs(src.getRow() - dest.getRow()) + Math.abs(src.getCol() - dest.getCol());
+        return Math.abs(src.row() - dest.row()) + Math.abs(src.col() - dest.col());
     }
 
     private ChessPiece removeChessPiece(ChessboardPoint point) {
@@ -175,7 +174,7 @@ public class Chessboard {
                         IsValidMove = true;
                     }
                 }
-                if(src.getRow() == dest.getRow() & calculateDistance(src, dest) == 3){//横向跳河
+                if(src.row() == dest.row() & calculateDistance(src, dest) == 3){//横向跳河
                     Points.add("(3,0)");
                     Points.add("(4,0)");
                     Points.add("(5,0)");
@@ -188,22 +187,22 @@ public class Chessboard {
                     boolean NoEnemyMouse = true;
                     if (src.toString().equals(Points.get(0)) | (src.toString().equals(Points.get(1))) |
                         src.toString().equals(Points.get(2))){
-                        for (int i = 0; i < LeftWaterPoints.size(); i++){
-                            if (getChessPieceAt(LeftWaterPoints.get(i)) != null){
-                                if (getChessPieceAt(LeftWaterPoints.get(i)).getOwner() != getChessPieceAt(src).getOwner()){
+                        for (ChessboardPoint leftWaterPoint : LeftWaterPoints) {
+                            if (getChessPieceAt(leftWaterPoint) != null) {
+                                if (getChessPieceAt(leftWaterPoint).getOwner() != getChessPieceAt(src).getOwner()) {
                                     NoEnemyMouse = false;
                                     break;
+                                }
                             }
                         }
-                    }
                     }
                     if (src.toString().equals(Points.get(3)) | (src.toString().equals(Points.get(4))) |
                             src.toString().equals(Points.get(5))){
                         if(dest.toString().equals(Points.get(0)) | dest.toString().equals(Points.get(1)) |
                            dest.toString().equals(Points.get(2))){
-                            for (int i = 0; i < LeftWaterPoints.size(); i++){
-                                if (getChessPieceAt(LeftWaterPoints.get(i)) != null){
-                                    if (getChessPieceAt(LeftWaterPoints.get(i)).getOwner() != getChessPieceAt(src).getOwner()){
+                            for (ChessboardPoint leftWaterPoint : LeftWaterPoints) {
+                                if (getChessPieceAt(leftWaterPoint) != null) {
+                                    if (getChessPieceAt(leftWaterPoint).getOwner() != getChessPieceAt(src).getOwner()) {
                                         NoEnemyMouse = false;
                                         break;
                                     }
@@ -212,9 +211,9 @@ public class Chessboard {
                         }
                         if(dest.toString().equals(Points.get(6)) | dest.toString().equals(Points.get(7)) |
                                 dest.toString().equals(Points.get(8))){
-                            for (int i = 0; i < RightWaterPoints.size(); i++){
-                                if (getChessPieceAt(RightWaterPoints.get(i)) != null){
-                                    if (getChessPieceAt(RightWaterPoints.get(i)).getOwner() != getChessPieceAt(src).getOwner()){
+                            for (ChessboardPoint rightWaterPoint : RightWaterPoints) {
+                                if (getChessPieceAt(rightWaterPoint) != null) {
+                                    if (getChessPieceAt(rightWaterPoint).getOwner() != getChessPieceAt(src).getOwner()) {
                                         NoEnemyMouse = false;
                                         break;
                                     }
@@ -224,9 +223,9 @@ public class Chessboard {
                     }
                     if (src.toString().equals(Points.get(6)) | (src.toString().equals(Points.get(7))) |
                             src.toString().equals(Points.get(8))){
-                        for (int i = 0; i < RightWaterPoints.size(); i++){
-                            if (getChessPieceAt(RightWaterPoints.get(i)) != null){
-                                if (getChessPieceAt(RightWaterPoints.get(i)).getOwner() != getChessPieceAt(src).getOwner()){
+                        for (ChessboardPoint rightWaterPoint : RightWaterPoints) {
+                            if (getChessPieceAt(rightWaterPoint) != null) {
+                                if (getChessPieceAt(rightWaterPoint).getOwner() != getChessPieceAt(src).getOwner()) {
                                     NoEnemyMouse = false;
                                     break;
                                 }
@@ -243,7 +242,7 @@ public class Chessboard {
                     }
                 }
 
-                if(src.getCol() == dest.getCol() & calculateDistance(src, dest) == 4){//纵向跳河
+                if(src.col() == dest.col() & calculateDistance(src, dest) == 4){//纵向跳河
                     Points.add("(2,1)");
                     Points.add("(2,2)");
                     Points.add("(6,1)");
@@ -255,9 +254,9 @@ public class Chessboard {
                     boolean nonEnemyMouse = true;
                     if (src.toString().equals(Points.get(0)) | (src.toString().equals(Points.get(1))) |
                             src.toString().equals(Points.get(2)) | (src.toString().equals(Points.get(3)))){
-                        for (int i = 0; i < LeftWaterPoints.size(); i++){
-                            if (getChessPieceAt(LeftWaterPoints.get(i)) != null){
-                                if (getChessPieceAt(LeftWaterPoints.get(i)).getOwner() != getChessPieceAt(src).getOwner()){
+                        for (ChessboardPoint leftWaterPoint : LeftWaterPoints) {
+                            if (getChessPieceAt(leftWaterPoint) != null) {
+                                if (getChessPieceAt(leftWaterPoint).getOwner() != getChessPieceAt(src).getOwner()) {
                                     nonEnemyMouse = false;
                                     break;
                                 }
@@ -266,9 +265,9 @@ public class Chessboard {
                     }
                     if (src.toString().equals(Points.get(4)) | (src.toString().equals(Points.get(5))) |
                             src.toString().equals(Points.get(6)) | (src.toString().equals(Points.get(7)))){
-                        for (int i = 0; i < RightWaterPoints.size(); i++){
-                            if (getChessPieceAt(RightWaterPoints.get(i)) != null){
-                                if (getChessPieceAt(RightWaterPoints.get(i)).getOwner() != getChessPieceAt(src).getOwner()){
+                        for (ChessboardPoint rightWaterPoint : RightWaterPoints) {
+                            if (getChessPieceAt(rightWaterPoint) != null) {
+                                if (getChessPieceAt(rightWaterPoint).getOwner() != getChessPieceAt(src).getOwner()) {
                                     nonEnemyMouse = false;
                                     break;
                                 }
@@ -311,11 +310,7 @@ public class Chessboard {
     }
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {//判断吃子是否合规
-        boolean ValidCapture = false;
-            if(getChessPieceAt(src) != null & getChessPieceAt(dest) != null & getChessPieceAt(src).canCapture(getChessPieceAt(dest))){
-            ValidCapture = true;
-        }
-        return ValidCapture;
+        return getChessPieceAt(src) != null & getChessPieceAt(dest) != null & getChessPieceAt(src).canCapture(getChessPieceAt(dest));
     }
 
     @Override
@@ -391,7 +386,7 @@ public class Chessboard {
         String trapRow7 = trapped1.substring(42,49);
         String trapRow8 = trapped1.substring(49,56);
         String trapRow9 = trapped1.substring(56,63);
-        return String.valueOf(GameController.TurnNumber) + "\n" + currentPlayer + "\n"+chessRow1 + "\n" + chessRow2 + "\n" + chessRow3
+        return GameController.TurnNumber + "\n" + currentPlayer + "\n"+chessRow1 + "\n" + chessRow2 + "\n" + chessRow3
                  + "\n" + chessRow4 + "\n" + chessRow5 + "\n" + chessRow6 + "\n" +chessRow7 + "\n" + chessRow8 + "\n" + chessRow9 +
                 "\n" + colorRow1 + "\n" + colorRow2 + "\n"  + colorRow3 + "\n" + colorRow4 + "\n" + colorRow5 + "\n" +
                 colorRow6 + "\n" + colorRow7 + "\n" + colorRow8 + "\n" + colorRow9 + "\n" + trapRow1 + "\n" + trapRow2 + "\n" + trapRow3

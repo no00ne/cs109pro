@@ -3,10 +3,10 @@ package model;
 
 public class ChessPiece {
     // the owner of the chess
-    private PlayerColor owner;
+    private final PlayerColor owner;
 
     // Elephant? Cat? Dog? ...
-    private String name;
+    private final String name;
     private int rank;
     private boolean trapped;
     public ChessPiece(PlayerColor owner, String name, int rank, boolean trapped) {

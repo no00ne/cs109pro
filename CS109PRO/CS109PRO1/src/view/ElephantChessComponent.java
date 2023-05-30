@@ -16,10 +16,10 @@ import java.net.URL;
  * but this class only cares how to draw Chess on ChessboardComponent
  */
 public class ElephantChessComponent extends JComponent {
-    private PlayerColor owner;
+    private final PlayerColor owner;
 
     private boolean selected;
-    private int rank;
+    private final int rank;
 
     public ElephantChessComponent(PlayerColor owner, int size, int rank) {
         this.owner = owner;
@@ -74,6 +74,7 @@ public class ElephantChessComponent extends JComponent {
         }
         BufferedImage image;
         try {
+            assert imageURL != null;
             image = ImageIO.read(imageURL);
         } catch (IOException e) {
             throw new RuntimeException(e);
