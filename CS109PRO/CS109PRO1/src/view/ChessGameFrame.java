@@ -130,31 +130,36 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
         button.addActionListener(e -> {
-            gameController.getView().removeChessComponent(gameController.getModel());
-            gameController.getModel().deletePieces();
-            GameController.setTurnNumber(1);
-            gameController.getFrame().addTurn();
-            gameController.getFrame().ColorSwitch();
-            gameController.setCurrentPlayer(PlayerColor.BLUE);
-            gameController.getModel().getGrid()[6][0].setPiece(new ChessPiece(PlayerColor.BLUE, "象",8, false));
-            gameController.getModel().getGrid()[2][6].setPiece(new ChessPiece(PlayerColor.RED, "象",8, false));
-            gameController.getModel().getGrid()[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, "狮",7, false));
-            gameController.getModel().getGrid()[0][0].setPiece(new ChessPiece(PlayerColor.RED, "狮",7, false));
-            gameController.getModel().getGrid()[8][0].setPiece(new ChessPiece(PlayerColor.BLUE, "虎",6, false));
-            gameController.getModel().getGrid()[0][6].setPiece(new ChessPiece(PlayerColor.RED, "虎",6, false));
-            gameController.getModel().getGrid()[2][2].setPiece(new ChessPiece(PlayerColor.RED, "豹",5, false));
-            gameController.getModel().getGrid()[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "豹",5, false));
-            gameController.getModel().getGrid()[6][2].setPiece(new ChessPiece(PlayerColor.BLUE, "狼",4, false));
-            gameController.getModel().getGrid()[2][4].setPiece(new ChessPiece(PlayerColor.RED, "狼",4, false));
-            gameController.getModel().getGrid()[1][1].setPiece(new ChessPiece(PlayerColor.RED, "狗",3, false));
-            gameController.getModel().getGrid()[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, "狗",3, false));
-            gameController.getModel().getGrid()[7][1].setPiece(new ChessPiece(PlayerColor.BLUE, "猫",2, false));
-            gameController.getModel().getGrid()[1][5].setPiece(new ChessPiece(PlayerColor.RED, "猫",2, false));
-            gameController.getModel().getGrid()[2][0].setPiece(new ChessPiece(PlayerColor.RED, "鼠",1, false));
-            gameController.getModel().getGrid()[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "鼠",1, false));
-            gameController.getView().initiateChessComponent(gameController.getModel());
+            extracted(gameController);
         });
     }
+
+    public static void extracted(GameController gameController) {
+        gameController.getView().removeChessComponent(gameController.getModel());
+        gameController.getModel().deletePieces();
+        GameController.setTurnNumber(1);
+        gameController.getFrame().addTurn();
+        gameController.getFrame().ColorSwitch();
+        gameController.setCurrentPlayer(PlayerColor.BLUE);
+        gameController.getModel().getGrid()[6][0].setPiece(new ChessPiece(PlayerColor.BLUE, "象",8, false));
+        gameController.getModel().getGrid()[2][6].setPiece(new ChessPiece(PlayerColor.RED, "象",8, false));
+        gameController.getModel().getGrid()[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, "狮",7, false));
+        gameController.getModel().getGrid()[0][0].setPiece(new ChessPiece(PlayerColor.RED, "狮",7, false));
+        gameController.getModel().getGrid()[8][0].setPiece(new ChessPiece(PlayerColor.BLUE, "虎",6, false));
+        gameController.getModel().getGrid()[0][6].setPiece(new ChessPiece(PlayerColor.RED, "虎",6, false));
+        gameController.getModel().getGrid()[2][2].setPiece(new ChessPiece(PlayerColor.RED, "豹",5, false));
+        gameController.getModel().getGrid()[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "豹",5, false));
+        gameController.getModel().getGrid()[6][2].setPiece(new ChessPiece(PlayerColor.BLUE, "狼",4, false));
+        gameController.getModel().getGrid()[2][4].setPiece(new ChessPiece(PlayerColor.RED, "狼",4, false));
+        gameController.getModel().getGrid()[1][1].setPiece(new ChessPiece(PlayerColor.RED, "狗",3, false));
+        gameController.getModel().getGrid()[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, "狗",3, false));
+        gameController.getModel().getGrid()[7][1].setPiece(new ChessPiece(PlayerColor.BLUE, "猫",2, false));
+        gameController.getModel().getGrid()[1][5].setPiece(new ChessPiece(PlayerColor.RED, "猫",2, false));
+        gameController.getModel().getGrid()[2][0].setPiece(new ChessPiece(PlayerColor.RED, "鼠",1, false));
+        gameController.getModel().getGrid()[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "鼠",1, false));
+        gameController.getView().initiateChessComponent(gameController.getModel());
+    }
+
     public void addLoadButton(GameController gameController) {
         JButton button = new JButton("Load");
         button.setLocation(810, 601);

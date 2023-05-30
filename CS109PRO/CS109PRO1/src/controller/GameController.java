@@ -9,6 +9,13 @@ import view.ElephantChessComponent;
 import view.ChessboardComponent;
 import view.ChessGameFrame;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import static view.ChessGameFrame.extracted;
+
 
 /**
  * Controller is the connection between model and view,
@@ -69,9 +76,9 @@ public class GameController implements GameListener {
         TurnNumber ++;
     }
 
-    private boolean win() {
+    private void win() {
         // TODO: Check the board if there is a winner
-        boolean win = false;
+        String winer = null;
         boolean NoRed = true;
         boolean NoBlue = true;
         ChessboardPoint redCave = new ChessboardPoint(0,3);
@@ -79,13 +86,13 @@ public class GameController implements GameListener {
         if(model.getGrid()[redCave.row()][redCave.col()].getPiece() != null){
             if(model.getChessPieceOwner(redCave) == PlayerColor.BLUE){
             System.out.print("Blue wins!");
-            win = true;
+            winer = "Blue";
         }
         }
         if(model.getGrid()[blueCave.row()][blueCave.col()].getPiece() != null){
             if(model.getChessPieceOwner(blueCave) == PlayerColor.RED){
             System.out.print("Red wins!");
-            win = true;
+            winer = "Red";
         }
         }
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -102,13 +109,58 @@ public class GameController implements GameListener {
         }
         if(NoBlue){
             System.out.print("Red wins!");
-            win = true;
+            winer = "Red";
         }
         if(NoRed){
             System.out.print("Blue wins!");
-            win = true;
+            winer = "Blue";
         }
-        return win;
+        if (winer!=null) {
+            gameOver(winer);
+        }
+
+    }
+
+    private void gameOver(String winner) {JDialog dialog = new JDialog(frame, "游戏结束", true);
+
+        // 设置窗口的布局
+        dialog.setLayout(new BorderLayout());
+
+        // 添加一个标签显示获胜者
+
+        JLabel winnerLabel = new JLabel(winner+"  wins", SwingConstants.CENTER);
+        winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));  // 设置字体大小并加粗
+        dialog.add(winnerLabel, BorderLayout.CENTER);
+        // 创建按钮面板
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+
+        // 创建 "Start a New Game" 按钮，并添加事件监听器
+        JButton startButton = new JButton("end the game");
+        startButton.setBackground(Color.RED);
+        startButton.addActionListener(e -> System.exit(0));
+
+        // 创建 "End the Game" 按钮，并添加事件监听器
+        JButton endButton = new JButton("start new game");
+        endButton.setBackground(Color.LIGHT_GRAY);
+        endButton.addActionListener(e -> {
+            extracted(this);
+            dialog.dispose();
+        });
+
+        // 将按钮添加到按钮面板
+        buttonPanel.add(startButton);
+        buttonPanel.add(endButton);
+
+        // 将按钮面板添加到窗口
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+
+        // 设置窗口的大小并使其可见
+        dialog.setSize(300, 200);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+
+
     }
 
 
@@ -139,10 +191,11 @@ public class GameController implements GameListener {
                     model.getGrid()[point.row()][point.col()].getPiece().setTrapped(true);
                 }
             }
-            if(win()){
-                System.exit(0);
-            }
-            // TODO: if the chess enter Dens or Traps and so on
+            win();
+
+
+
+
         }
     }
     @Override
@@ -167,9 +220,9 @@ public class GameController implements GameListener {
             frame.addTurn();
             view.repaint();
         }
-        if(win()){
-            System.exit(0);
-        }
+        win();
+
+
     }
 
 }
