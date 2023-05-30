@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * This is the equivalent of the Cell class,
@@ -13,7 +14,7 @@ import java.net.URL;
  */
 
 public class CellComponent extends JPanel {
-    private String cellForm;
+    private final String cellForm;
 
     public CellComponent(String cellForm, Point location, int size) {
         setLayout(new GridLayout(1,1));
@@ -32,7 +33,7 @@ public class CellComponent extends JPanel {
         URL imageURL = getClass().getClassLoader().getResource(cellForm);
         BufferedImage image;
         try {
-            image = ImageIO.read(imageURL);
+            image = ImageIO.read(Objects.requireNonNull(imageURL));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
