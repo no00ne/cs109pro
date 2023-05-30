@@ -4,9 +4,7 @@ import model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
@@ -97,18 +95,18 @@ public class ChessboardComponent extends JComponent {
                 ChessboardPoint temp = new ChessboardPoint(i, j);
                 CellComponent cell;
                 if (riverCell.contains(temp)) {
-                    cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
+                    cell = new CellComponent("water.webp", calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 }
                 else if (TrapCell.contains(temp)) {
-                    cell = new CellComponent(Color.ORANGE, calculatePoint(i, j), CHESS_SIZE);
+                    cell = new CellComponent("trap.psd", calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 }
                 else if (CaveCell.contains(temp)) {
-                    cell = new CellComponent(Color.YELLOW, calculatePoint(i, j), CHESS_SIZE);
+                    cell = new CellComponent("grassland.webp", calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 } else {
-                    cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
+                    cell = new CellComponent("grassland.webp", calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 }
                 gridComponents[i][j] = cell;
