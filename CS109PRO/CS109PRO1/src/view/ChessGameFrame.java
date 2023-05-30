@@ -1,10 +1,14 @@
 package view;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import controller.GameController;
 import model.ChessPiece;
@@ -36,14 +40,49 @@ public class ChessGameFrame extends JFrame {
         setLocationRelativeTo(null); // Center the window.
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
+
+
+
         setTurnLabel();
         setColorLabel();
         ColorSwitch();
         addChessboard();
         addLabel();
         addHelloButton();
+        BackgroundFrame();
     }
 
+    public void BackgroundFrame() {
+        URL   imageURL =getClass().getClassLoader().getResource("forest-stones.png");
+        BufferedImage image;
+        try {
+
+            image = ImageIO.read(Objects.requireNonNull(imageURL));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Create a new panel with overridden paintComponent method
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                // Draw the image on the panel
+                g2.drawImage(image, 0, 0, WIDTH,HEIGTH,null);
+            }
+        };
+
+        // Add the panel to the JFrame
+        add(panel);
+
+        // Set the size of the JFrame to match the image
+
+
+        // Other JFrame setup methods...
+
+    }
     public ChessboardComponent getChessboardComponent() {
         return chessboardComponent;
     }
@@ -129,9 +168,7 @@ public class ChessGameFrame extends JFrame {
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
-        button.addActionListener(e -> {
-            extracted(gameController);
-        });
+        button.addActionListener(e -> extracted(gameController));
     }
 
     public static void extracted(GameController gameController) {
@@ -173,7 +210,7 @@ public class ChessGameFrame extends JFrame {
             fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("标签文件(*.txt)", "txt");//过滤文件格式
             fileChooser.setFileFilter(filter);
-            fileChooser.setSelectedFile(new File("C:\\Users\\Administrator\\Desktop\\save"));//选择文件读取路径
+            fileChooser.setSelectedFile(new File(System.getenv("LOCALAPPDATA")));//选择文件读取路径
             fileChooser.showSaveDialog(null);
             File file = fileChooser.getSelectedFile();
             int state = fileChooser.showOpenDialog(null);
@@ -539,7 +576,7 @@ public class ChessGameFrame extends JFrame {
             fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("标签文件(*.txt)", "txt");
             fileChooser.setFileFilter(filter);
-            fileChooser.setSelectedFile(new File("C:\\Users\\Administrator\\Desktop\\save"));
+            fileChooser.setSelectedFile(new File(System.getenv("LOCALAPPDATA")));
             fileChooser.showSaveDialog(null);
             File file = fileChooser.getSelectedFile();
             int state = fileChooser.showOpenDialog(null);
