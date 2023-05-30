@@ -78,9 +78,10 @@ public class ElephantChessComponent extends JComponent {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        if(this.rank>=1&&this.rank<=8){
         g2.drawImage(image, getWidth() / 4-16, getHeight() * 5 / 8-44,70,70,null);
         g2.setColor(owner.getColor());
-        g2.drawRect(0, 0, getWidth() , getHeight());
+        g2.drawRect(0, 0, getWidth() -2, getHeight()-2);}
 
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
