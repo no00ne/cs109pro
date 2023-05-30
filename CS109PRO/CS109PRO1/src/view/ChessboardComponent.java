@@ -103,7 +103,7 @@ public class ChessboardComponent extends JComponent {
                     this.add(cell);
                 }
                 else if (CaveCell.contains(temp)) {
-                    cell = new CellComponent("grassland.png", calculatePoint(i, j), CHESS_SIZE);
+                    cell = new CellComponent("Cave.png", calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 } else {
                     cell = new CellComponent("grassland.png", calculatePoint(i, j), CHESS_SIZE);
