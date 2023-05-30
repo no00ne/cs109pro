@@ -3,8 +3,13 @@ package view;
 
 import model.PlayerColor;
 import model.ChessPiece;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * This is the equivalent of the ChessPiece class,
@@ -39,33 +44,44 @@ public class ElephantChessComponent extends JComponent {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
-        g2.setFont(font);
-        g2.setColor(owner.getColor());
+
+
+        URL imageURL=null;
         if (this.rank == 8){
-            g2.drawString("象", getWidth() / 4, getHeight() * 5 / 8);
+            imageURL =getClass().getClassLoader().getResource("Elephant.png");
         }
         if (this.rank == 7){
-            g2.drawString("狮", getWidth() / 4, getHeight() * 5 / 8);
+             imageURL =getClass().getClassLoader().getResource("Lion.png");
+
         }
         if (this.rank == 6){
-            g2.drawString("虎", getWidth() / 4, getHeight() * 5 / 8);
+            imageURL =getClass().getClassLoader().getResource("Tiger.png");
         }
         if (this.rank == 5){
-            g2.drawString("豹", getWidth() / 4, getHeight() * 5 / 8);
+            imageURL =getClass().getClassLoader().getResource("Leopard.png");
         }
         if (this.rank == 4){
-            g2.drawString("狼", getWidth() / 4, getHeight() * 5 / 8);
+            imageURL =getClass().getClassLoader().getResource("Wolf.png");
         }
         if (this.rank == 3){
-            g2.drawString("狗", getWidth() / 4, getHeight() * 5 / 8);
+            imageURL =getClass().getClassLoader().getResource("Dog.png");
         }
         if (this.rank == 2){
-            g2.drawString("猫", getWidth() / 4, getHeight() * 5 / 8);
+            imageURL =getClass().getClassLoader().getResource("Cat.png");
         }
         if (this.rank == 1){
-            g2.drawString("鼠", getWidth() / 4, getHeight() * 5 / 8);
+            imageURL =getClass().getClassLoader().getResource("Mouse.png");
         }
+        BufferedImage image;
+        try {
+            image = ImageIO.read(imageURL);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        g2.drawImage(image, getWidth() / 4-16, getHeight() * 5 / 8-44,70,70,null);
+        g2.setColor(Color.RED);
+        g2.drawRect(0, 0, getWidth() , getHeight());
+
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());
