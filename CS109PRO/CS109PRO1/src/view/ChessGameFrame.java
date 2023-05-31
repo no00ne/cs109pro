@@ -44,12 +44,21 @@ public class ChessGameFrame extends JFrame {
 
 
         setTurnLabel();
+
+
         setColorLabel();
+
+
         ColorSwitch();
+
         addChessboard();
+
         addLabel();
+
         addHelloButton();
+
         BackgroundFrame();
+
     }
 
     public void BackgroundFrame() {
@@ -70,12 +79,13 @@ public class ChessGameFrame extends JFrame {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 // Draw the image on the panel
-                g2.drawImage(image, 0, 0, WIDTH,HEIGTH,null);
+                g2.drawImage(image, 0, 0, 2*HEIGTH,HEIGTH,null);
             }
         };
-
+        panel.setBounds(0, 0, 2*HEIGTH, HEIGTH);
         // Add the panel to the JFrame
         add(panel);
+
 
         // Set the size of the JFrame to match the image
 
