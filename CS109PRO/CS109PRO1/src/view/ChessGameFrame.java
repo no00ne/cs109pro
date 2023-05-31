@@ -49,7 +49,7 @@ public class ChessGameFrame extends JFrame {
         setColorLabel();
 
 
-        ColorSwitch();
+
 
         addChessboard();
 
@@ -137,7 +137,7 @@ public class ChessGameFrame extends JFrame {
     }
 
     public void setColorLabel() {
-        this.ColorLabel.setText("");
+        this.ColorLabel.setText("蓝方移动");
         this.ColorLabel.setLocation(HEIGTH, HEIGTH / 10 + 360);
         this.ColorLabel.setSize(200, 60);
         this.ColorLabel.setFont(new Font("楷体", Font.BOLD, 20));
@@ -221,9 +221,10 @@ public class ChessGameFrame extends JFrame {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("标签文件(*.txt)", "txt");//过滤文件格式
             fileChooser.setFileFilter(filter);
             fileChooser.setSelectedFile(new File(System.getenv("LOCALAPPDATA")));//选择文件读取路径
-            fileChooser.showSaveDialog(null);
-            File file = fileChooser.getSelectedFile();
+
+
             int state = fileChooser.showOpenDialog(null);
+            File file = fileChooser.getSelectedFile();
             if(state == JFileChooser.APPROVE_OPTION){
                 try {
                     FileInputStream fileInputStream = new FileInputStream(file);
@@ -575,7 +576,7 @@ public class ChessGameFrame extends JFrame {
             }
         });
     }
-    public void addSaveButton(Chessboard chessboard){
+    public void addSaveButton(Chessboard chessboard) {
         JButton button = new JButton("Save");
         button.setLocation(810, 481);
         button.setSize(200, 60);
@@ -584,21 +585,22 @@ public class ChessGameFrame extends JFrame {
         button.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("标签文件(*.txt)", "txt");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files (*.txt)", "txt");
             fileChooser.setFileFilter(filter);
-            fileChooser.setSelectedFile(new File(System.getenv("LOCALAPPDATA")));
-            fileChooser.showSaveDialog(null);
-            File file = fileChooser.getSelectedFile();
-            int state = fileChooser.showOpenDialog(null);
-            if(state == JFileChooser.APPROVE_OPTION){
-                try{
-                    PrintStream printStream = new PrintStream(new FileOutputStream(file)) ;
-                    printStream.println(chessboard.toString());//把棋盘信息录入txt文件
+            fileChooser.setCurrentDirectory(new File(System.getenv("LOCALAPPDATA")));
+            int state = fileChooser.showSaveDialog(null);
+            if (state == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                // Append .txt extension if not already present
+                if (!file.getAbsolutePath().endsWith(".txt")) {
+                    file = new File(file.getAbsolutePath() + ".txt");
+                }
+                try (PrintStream printStream = new PrintStream(new FileOutputStream(file))) {
+                    printStream.println(chessboard.toString());  // Write the chessboard information to the file
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
             }
-
         });
     }
 
