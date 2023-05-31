@@ -218,14 +218,14 @@ public class ChessGameFrame extends JFrame {
             ArrayList<String> Text  = new ArrayList<>();
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("标签文件(*.txt)", "txt");//过滤文件格式
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files (*.txt)", "txt");//file format filter
             fileChooser.setFileFilter(filter);
-            fileChooser.setSelectedFile(new File(System.getenv("LOCALAPPDATA")));//选择文件读取路径
-
+            File defaultDirectory = new File(System.getenv("LOCALAPPDATA") + File.separator + "chesssave");
+            fileChooser.setCurrentDirectory(defaultDirectory);//set file loading path
 
             int state = fileChooser.showOpenDialog(null);
-            File file = fileChooser.getSelectedFile();
             if(state == JFileChooser.APPROVE_OPTION){
+                File file = fileChooser.getSelectedFile();
                 try {
                     FileInputStream fileInputStream = new FileInputStream(file);
                     InputStreamReader reader = new InputStreamReader(fileInputStream);
@@ -237,7 +237,7 @@ public class ChessGameFrame extends JFrame {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                if(Text.size() != 29){//各种各样的错误检查
+                if(Text.size() != 29){//various error checking
                     System.out.print("Wrong File Size!");
                 }
                 else if (!Text.get(1).equals("RED") & !Text.get(1).equals("BLUE")){
@@ -249,6 +249,10 @@ public class ChessGameFrame extends JFrame {
                 else if(Text.get(0).startsWith("0")){
                     System.out.print("Wrong Turn number!");
                 }
+
+
+
+
                 else if (Text.get(2).length() != 7 | Text.get(3).length() != 7 |
                         Text.get(4).length() != 7 | Text.get(5).length() != 7 |
                         Text.get(6).length() != 7 | Text.get(7).length() != 7 |
@@ -587,7 +591,14 @@ public class ChessGameFrame extends JFrame {
             fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files (*.txt)", "txt");
             fileChooser.setFileFilter(filter);
-            fileChooser.setCurrentDirectory(new File(System.getenv("LOCALAPPDATA")));
+
+            // Create the new directory
+            File defaultDirectory = new File(System.getenv("LOCALAPPDATA") + File.separator + "chesssave");
+            defaultDirectory.mkdirs();
+
+            // Set the default directory for the file chooser
+            fileChooser.setCurrentDirectory(defaultDirectory);
+
             int state = fileChooser.showSaveDialog(null);
             if (state == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
@@ -603,5 +614,6 @@ public class ChessGameFrame extends JFrame {
             }
         });
     }
+
 
 }
