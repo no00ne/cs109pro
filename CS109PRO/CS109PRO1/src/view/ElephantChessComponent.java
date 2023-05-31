@@ -2,7 +2,6 @@ package view;
 
 
 import model.PlayerColor;
-import model.ChessPiece;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

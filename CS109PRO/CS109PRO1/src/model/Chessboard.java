@@ -9,6 +9,7 @@ import controller.GameController;
 public class Chessboard {
 
     private final Cell[][] grid;
+    public ArrayList<String>chessMovement;
 
     public Chessboard() {
         this.grid =
@@ -16,6 +17,7 @@ public class Chessboard {
 
         initGrid();
         initPieces();
+        chessMovement = new ArrayList<>();
     }
 
     private void initGrid() {
@@ -33,22 +35,7 @@ public class Chessboard {
         }
     }
     private void initPieces() {//棋子初始化
-        grid[6][0].setPiece(new ChessPiece(PlayerColor.BLUE, "象",8, false));
-        grid[2][6].setPiece(new ChessPiece(PlayerColor.RED, "象",8, false));
-        grid[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, "狮",7, false));
-        grid[0][0].setPiece(new ChessPiece(PlayerColor.RED, "狮",7, false));
-        grid[8][0].setPiece(new ChessPiece(PlayerColor.BLUE, "虎",6, false));
-        grid[0][6].setPiece(new ChessPiece(PlayerColor.RED, "虎",6, false));
-        grid[2][2].setPiece(new ChessPiece(PlayerColor.RED, "豹",5, false));
-        grid[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "豹",5, false));
-        grid[6][2].setPiece(new ChessPiece(PlayerColor.BLUE, "狼",4, false));
-        grid[2][4].setPiece(new ChessPiece(PlayerColor.RED, "狼",4, false));
-        grid[1][1].setPiece(new ChessPiece(PlayerColor.RED, "狗",3, false));
-        grid[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, "狗",3, false));
-        grid[7][1].setPiece(new ChessPiece(PlayerColor.BLUE, "猫",2, false));
-        grid[1][5].setPiece(new ChessPiece(PlayerColor.RED, "猫",2, false));
-        grid[2][0].setPiece(new ChessPiece(PlayerColor.RED, "鼠",1, false));
-        grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "鼠",1, false));
+
     }
     public ChessPiece getChessPieceAt(ChessboardPoint point) {
         return getGridAt(point).getPiece();
@@ -77,13 +64,16 @@ public class Chessboard {
             throw new IllegalArgumentException("Illegal chess move!");
         }
         System.out.print(getChessPieceOwner(src) + " " + getChessPieceAt(src).getName() + " move to " + dest.toString() + "\n");
+        this.chessMovement.add(getChessPieceOwner(src) + " " + getChessPieceAt(src).getName() + " move to " + dest + "\n");
         setChessPiece(dest, removeChessPiece(src));
     }
 
-    public void captureChessPiece(ChessboardPoint src, ChessboardPoint dest) {//吃棋子（未完成）
+    public void captureChessPiece(ChessboardPoint src, ChessboardPoint dest) {//吃棋子
         if (isValidCapture(src, dest)) {
             System.out.print(getChessPieceOwner(src) + " " + getChessPieceAt(src).getName() + " has eaten " + getChessPieceOwner(dest)
                      + " " + getChessPieceAt(dest).getName() + " at " + dest.toString() + "\n");
+            this.chessMovement.add(getChessPieceOwner(src) + " " + getChessPieceAt(src).getName() + " has eaten " + getChessPieceOwner(dest)
+                    + " " + getChessPieceAt(dest).getName() + " at " + dest + "\n");
             getGridAt(dest).removePiece();
             setChessPiece(dest, removeChessPiece(src));
         }

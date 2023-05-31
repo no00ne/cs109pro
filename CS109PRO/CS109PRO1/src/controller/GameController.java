@@ -11,8 +11,6 @@ import view.ChessGameFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static view.ChessGameFrame.extracted;
 
@@ -45,7 +43,7 @@ public class GameController implements GameListener {
         view.initiateChessComponent(model);
         view.repaint();
         setTurnNumber(1);
-        frame.addSaveButton(model);
+
 
     }
 
@@ -123,24 +121,24 @@ public class GameController implements GameListener {
 
     private void gameOver(String winner) {JDialog dialog = new JDialog(frame, "游戏结束", true);
 
-        // 设置窗口的布局
+
         dialog.setLayout(new BorderLayout());
 
-        // 添加一个标签显示获胜者
+
 
         JLabel winnerLabel = new JLabel(winner+"  wins", SwingConstants.CENTER);
-        winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));  // 设置字体大小并加粗
+        winnerLabel.setFont(new Font("Serif", Font.BOLD, 20));
         dialog.add(winnerLabel, BorderLayout.CENTER);
-        // 创建按钮面板
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
-        // 创建 "Start a New Game" 按钮，并添加事件监听器
+
         JButton startButton = new JButton("end the game");
         startButton.setBackground(Color.RED);
         startButton.addActionListener(e -> System.exit(0));
 
-        // 创建 "End the Game" 按钮，并添加事件监听器
+
         JButton endButton = new JButton("start new game");
         endButton.setBackground(Color.LIGHT_GRAY);
         endButton.addActionListener(e -> {
@@ -148,14 +146,14 @@ public class GameController implements GameListener {
             dialog.dispose();
         });
 
-        // 将按钮添加到按钮面板
+
         buttonPanel.add(startButton);
         buttonPanel.add(endButton);
 
-        // 将按钮面板添加到窗口
+
         dialog.add(buttonPanel, BorderLayout.SOUTH);
 
-        // 设置窗口的大小并使其可见
+
         dialog.setSize(300, 200);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
@@ -178,7 +176,9 @@ public class GameController implements GameListener {
             if(point.toString().equals("(0,2)") | point.toString().equals("(0,4)") |
                point.toString().equals("(1,3)")){
               if(model.getChessPieceOwner(point) == PlayerColor.BLUE){
-                  System.out.print(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
+                  System.out.println(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
+                          " has entered the trap!");
+                  model.chessMovement.add(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
                           " has entered the trap!");
                   model.getGrid()[point.row()][point.col()].getPiece().setTrapped(true);
               }
@@ -186,7 +186,9 @@ public class GameController implements GameListener {
             if(point.toString().equals("(8,2)") | point.toString().equals("(8,4)") |
                point.toString().equals("(7,3)")){
                 if(model.getChessPieceOwner(point) == PlayerColor.RED){
-                    System.out.print(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
+                    System.out.println(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
+                            " has entered the trap!");
+                    model.chessMovement.add(model.getChessPieceOwner(point) + " " + model.getChessPieceAt(point).getName() +
                             " has entered the trap!");
                     model.getGrid()[point.row()][point.col()].getPiece().setTrapped(true);
                 }

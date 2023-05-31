@@ -1,27 +1,25 @@
 package view;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
-
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
 
 import controller.GameController;
 import model.ChessPiece;
 import model.Chessboard;
 import model.PlayerColor;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
  */
 public class ChessGameFrame extends JFrame {
 
-    //    public final Dimension FRAME_SIZE ;
-    private final int WIDTH;
     private final int HEIGTH;
 
     private final int ONE_CHESS_SIZE;
@@ -32,16 +30,16 @@ public class ChessGameFrame extends JFrame {
 
     public ChessGameFrame(int width, int height) {
         setTitle("2023 CS109 Project Demo"); //设置标题
-        this.WIDTH = width;
+        //    public final Dimension FRAME_SIZE ;
         this.HEIGTH = height;
         this.ONE_CHESS_SIZE = (HEIGTH * 4 / 5) / 9;
 
-        setSize(WIDTH, HEIGTH);
+        setSize(width, HEIGTH);
         setLocationRelativeTo(null); // Center the window.
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-
+BackgroundFrame();
 
         setTurnLabel();
         setColorLabel();
@@ -49,7 +47,7 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addHelloButton();
-        BackgroundFrame();
+
     }
 
     public void BackgroundFrame() {
@@ -70,12 +68,13 @@ public class ChessGameFrame extends JFrame {
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 // Draw the image on the panel
-                g2.drawImage(image, 0, 0, WIDTH,HEIGTH,null);
+                g2.drawImage(image, 0, 0, HEIGTH*2,HEIGTH,this);
             }
         };
-
+       /* panel.setLocation(HEIGTH, HEIGTH / 10 + 600);*/
         // Add the panel to the JFrame
         add(panel);
+
 
         // Set the size of the JFrame to match the image
 
@@ -97,6 +96,7 @@ public class ChessGameFrame extends JFrame {
     private void addChessboard() {
         chessboardComponent = new ChessboardComponent(ONE_CHESS_SIZE);
         chessboardComponent.setLocation(HEIGTH / 5, HEIGTH / 10);
+
         add(chessboardComponent);
     }
 
@@ -110,6 +110,7 @@ public class ChessGameFrame extends JFrame {
         statusLabel.setSize(200, 60);
         statusLabel.setFont(new Font("楷体", Font.BOLD, 20));
         add(statusLabel);
+
     }
 
     public void addTurn(){
@@ -124,17 +125,21 @@ public class ChessGameFrame extends JFrame {
         this.TurnLabel.setSize(200, 60);
         this.TurnLabel.setFont(new Font("楷体", Font.BOLD, 20));
         add(this.TurnLabel);
+
     }
 
     public void setColorLabel() {
-        this.ColorLabel.setText("");
+        this.ColorLabel.setText("蓝方移动");
         this.ColorLabel.setLocation(HEIGTH, HEIGTH / 10 + 360);
         this.ColorLabel.setSize(200, 60);
         this.ColorLabel.setFont(new Font("楷体", Font.BOLD, 20));
         add(this.ColorLabel);
     }
     public void ColorSwitch(){
-        if(GameController.TurnNumber % 2 == 1){
+        if(GameController.TurnNumber == 1){
+            this.ColorLabel.setText("蓝方移动");
+        }
+        else if(GameController.TurnNumber % 2 == 1){
             this.ColorLabel.setText("蓝方移动");
         }
         else {
@@ -161,6 +166,7 @@ public class ChessGameFrame extends JFrame {
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+
     }
     public void addResetButton (GameController gameController){
         JButton button = new JButton("Reset");
@@ -178,22 +184,22 @@ public class ChessGameFrame extends JFrame {
         gameController.getFrame().addTurn();
         gameController.getFrame().ColorSwitch();
         gameController.setCurrentPlayer(PlayerColor.BLUE);
-        gameController.getModel().getGrid()[6][0].setPiece(new ChessPiece(PlayerColor.BLUE, "象",8, false));
-        gameController.getModel().getGrid()[2][6].setPiece(new ChessPiece(PlayerColor.RED, "象",8, false));
-        gameController.getModel().getGrid()[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, "狮",7, false));
-        gameController.getModel().getGrid()[0][0].setPiece(new ChessPiece(PlayerColor.RED, "狮",7, false));
-        gameController.getModel().getGrid()[8][0].setPiece(new ChessPiece(PlayerColor.BLUE, "虎",6, false));
-        gameController.getModel().getGrid()[0][6].setPiece(new ChessPiece(PlayerColor.RED, "虎",6, false));
-        gameController.getModel().getGrid()[2][2].setPiece(new ChessPiece(PlayerColor.RED, "豹",5, false));
-        gameController.getModel().getGrid()[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "豹",5, false));
-        gameController.getModel().getGrid()[6][2].setPiece(new ChessPiece(PlayerColor.BLUE, "狼",4, false));
-        gameController.getModel().getGrid()[2][4].setPiece(new ChessPiece(PlayerColor.RED, "狼",4, false));
-        gameController.getModel().getGrid()[1][1].setPiece(new ChessPiece(PlayerColor.RED, "狗",3, false));
-        gameController.getModel().getGrid()[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, "狗",3, false));
-        gameController.getModel().getGrid()[7][1].setPiece(new ChessPiece(PlayerColor.BLUE, "猫",2, false));
-        gameController.getModel().getGrid()[1][5].setPiece(new ChessPiece(PlayerColor.RED, "猫",2, false));
-        gameController.getModel().getGrid()[2][0].setPiece(new ChessPiece(PlayerColor.RED, "鼠",1, false));
-        gameController.getModel().getGrid()[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "鼠",1, false));
+        gameController.getModel().getGrid()[6][0].setPiece(new ChessPiece(PlayerColor.BLUE, "elephant",8, false));
+        gameController.getModel().getGrid()[2][6].setPiece(new ChessPiece(PlayerColor.RED, "elephant",8, false));
+        gameController.getModel().getGrid()[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, "lion",7, false));
+        gameController.getModel().getGrid()[0][0].setPiece(new ChessPiece(PlayerColor.RED, "lion",7, false));
+        gameController.getModel().getGrid()[8][0].setPiece(new ChessPiece(PlayerColor.BLUE, "tiger",6, false));
+        gameController.getModel().getGrid()[0][6].setPiece(new ChessPiece(PlayerColor.RED, "tiger",6, false));
+        gameController.getModel().getGrid()[2][2].setPiece(new ChessPiece(PlayerColor.RED, "leopard",5, false));
+        gameController.getModel().getGrid()[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "leopard",5, false));
+        gameController.getModel().getGrid()[6][2].setPiece(new ChessPiece(PlayerColor.BLUE, "wolf",4, false));
+        gameController.getModel().getGrid()[2][4].setPiece(new ChessPiece(PlayerColor.RED, "wolf",4, false));
+        gameController.getModel().getGrid()[1][1].setPiece(new ChessPiece(PlayerColor.RED, "dog",3, false));
+        gameController.getModel().getGrid()[7][5].setPiece(new ChessPiece(PlayerColor.BLUE, "dog",3, false));
+        gameController.getModel().getGrid()[7][1].setPiece(new ChessPiece(PlayerColor.BLUE, "cat",2, false));
+        gameController.getModel().getGrid()[1][5].setPiece(new ChessPiece(PlayerColor.RED, "cat",2, false));
+        gameController.getModel().getGrid()[2][0].setPiece(new ChessPiece(PlayerColor.RED, "mouse",1, false));
+        gameController.getModel().getGrid()[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "mouse",1, false));
         gameController.getView().initiateChessComponent(gameController.getModel());
     }
 
@@ -202,7 +208,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(810, 601);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
+
         button.addActionListener(e -> {
             String line;
             ArrayList<String> Text  = new ArrayList<>();
@@ -570,7 +576,7 @@ public class ChessGameFrame extends JFrame {
         button.setLocation(810, 481);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
+
         button.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
